@@ -1,0 +1,55 @@
+<mat-sidenav-container>
+  <mat-sidenav #order mode="over">
+    <form class="form" [formGroup]="forms">
+      <div>
+        <mat-form-field>
+          <input matInput placeholder="Search Customer" [matAutocomplete]="auto" [formControl]="customerControls">
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)='customerSelected($event.option.value)'
+            [displayWith]="customerName">
+            <mat-option *ngFor="let customer of filteredCustomers | async" [value]="customer">
+              <span>{{customer['name']}}</span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <input type="text" matInput placeholder="Customer Name" formControlName="name" readonly>
+        </mat-form-field>
+        <mat-form-field>
+          <input type="text" matInput placeholder="Phone" formControlName="phone" readonly>
+        </mat-form-field>
+        <mat-form-field>
+          <input type="text" matInput placeholder="Email" formControlName="email" readonly>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <input type="text" matInput placeholder="Film Name" formControlName="film" readonly>
+        </mat-form-field>
+        <mat-form-field>
+          <input type="text" matInput placeholder="Time" formControlName="time" readonly>
+        </mat-form-field>
+        <mat-form-field>
+          <input type="number" matInput placeholder="Quantity" formControlName="quantity" step="1">
+        </mat-form-field>
+      </div>
+      <div>
+        <button mat-raised-button color="primary" (click)="submit()">ORDER</button>
+      </div>
+    </form>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <div class="content">
+      <div class="film" *ngFor="let ticket of tickets" (click)="orderClicked($event, ticket)">
+        <h1>Film: {{ticket['film']}}</h1>
+
+        <hr>
+
+        <h3>Start: {{ticket['time_started']  | date:'HH:mm'}}</h3>
+        <h3>End: {{ticket['time_ended']  | date:'HH:mm'}}</h3>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
