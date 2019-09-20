@@ -1,6 +1,9 @@
 <mat-sidenav-container>
-  <mat-sidenav #order mode="over">
-    <form class="form" [formGroup]="forms">
+  <mat-sidenav #order mode="over" class="form" [ngSwitch]="expired">
+    <div class="warn" *ngSwitchCase="true">
+      <h1>File Expired</h1>
+    </div>
+    <form class="form" [formGroup]="forms" *ngSwitchCase="false">
       <div>
         <mat-form-field>
           <input matInput placeholder="Search Customer" [matAutocomplete]="auto" [formControl]="customerControls">

@@ -40,6 +40,17 @@
     }
   }
 
+  .warn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+
+    h1 {
+      text-align: center;
+    }
+  }
+
   .form {
     overflow: auto;
     padding: 20px;

@@ -14,10 +14,11 @@ import { AppService } from './app.service';
 })
 export class AppComponent implements OnInit {
   customers: any;
+  customerControls: FormControl;
+  expired: boolean;
   filteredCustomers: Observable<any[]>;
   tickets: any;
   forms: FormGroup;
-  customerControls: FormControl;
 
   @ViewChild('order', { static: true }) order: MatSidenav;
 
@@ -27,8 +28,9 @@ export class AppComponent implements OnInit {
     private form: FormBuilder,
   ) {
     this.customers = [];
-    this.tickets = [];
     this.customerControls = new FormControl();
+    this.expired = false;
+    this.tickets = [];
 
     this.forms = this.form.group({
       id_customer: [''],
@@ -60,6 +62,9 @@ export class AppComponent implements OnInit {
 
   orderClicked(event: any, ticket: Object) {
     this.order.open();
+    this.expired = false;
+
+    if (new Date(ticket['date']) < new Date()) this.expired = true;
 
     this.forms.get('id_ticket').setValue(ticket['id']);
     this.forms.get('quantity').setValue(0);
